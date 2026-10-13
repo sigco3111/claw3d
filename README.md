@@ -1,113 +1,129 @@
-# Claw Machine 3D
+# 3D 인형뽑기 - 한국어판
 
-A fully client-side 3D claw machine game built with **React 19 + Three.js + Rapier physics**. Aim with the joystick and minimap, drop the claw, and pray your grip holds — the toy can slip mid-carry just like a real arcade machine. Coins, toy collection, achievements, and progress all persist locally; no server required.
+React, Three.js, Rapier 물리엔진으로 만든 브라우저 인형뽑기 게임입니다. 집게를 움직여 인형을 잡고, 출구까지 옮겨 보세요. 실제 기계처럼 옮기는 도중 인형이 흔들리거나 미끄러질 수 있습니다.
 
-## Live Preview
+이 저장소는 [Necis의 claw3d](https://github.com/neciszhang/claw3d)를 한국어로 번역한 포크입니다. 코드 주석, 원작자 표시와 MIT 라이선스는 그대로 유지했습니다. 원본 영어 설명서는 [README.en.md](README.en.md)에 보존했습니다.
 
-> https://neciszhang.github.io/claw3d/
+## 바로 플레이
 
-## Screenshot
+**https://sigco3111.github.io/claw3d/**
 
-![Claw Machine 3D Gameplay](screenshot/20260807172320.jpg)
+설치나 로그인 없이 실행할 수 있습니다. 실제 결제나 경품은 없습니다. 게임 속 동전은 로컬 게임 자원입니다.
 
-## Gameplay
+![원작 게임 화면](screenshot/20260807172320.jpg)
 
-- **Insert a coin** (1 🪙 per grab), move the claw with the joystick / WASD / arrow keys, press **START**
-- The three-prong claw physically closes around toys — a toy touched by all three prongs is caught
-- Caught ≠ won: the toy **swings while carried and can slip**, driven by your aim accuracy, movement speed, toy weight, and difficulty; slipping near the chute can still luckily roll in
-- Two consecutive slips lock the grip: the next catch is guaranteed (pity system)
-- Wins pay back 1 🪙 and rarity-based ⭐ stars; check the album for collection and achievements
+> 위 이미지는 원작 저장소에 포함된 화면입니다. 한국어판은 화면 안내와 메뉴가 한국어로 표시됩니다.
 
-## Features
+## 게임 방법
 
-### Core experience
-- Real rigid-body simulation (Rapier): toy collision, stacking, swinging, slipping
-- Aim assist: floor projection ring that turns gold over a catchable toy (toggleable)
-- Slip reasons surfaced to the player: off-center grab / moved too fast / weak grip
-- Catch / slip / drop-in feedback: claw jolt & bite pause, camera shake & callouts, coin fly-in
-- Fast failure recovery: accelerated recall on a miss, skip button, shortened coin animation on replays
+1. **동전 넣기**를 누릅니다. 한 번 시도할 때 게임 동전 1개를 사용합니다.
+2. 왼쪽 아래 조이스틱, **WASD** 또는 **방향키**로 집게를 이동합니다.
+3. 오른쪽 위 미니맵을 보며 인형 바로 위로 집게를 맞춥니다.
+4. **뽑기 시작**을 누르면 집게가 내려가 인형을 잡고 출구로 옮깁니다.
+5. 인형이 오른쪽 앞 출구로 들어가야 성공입니다. 잡았더라도 중간에 놓치면 실패할 수 있습니다.
 
-### Content & progression (all localStorage, no backend)
-- **5 toy variants across 3 rarity tiers** (common / rare / hidden) with distinct color, size, weight, and slip factor
-- **Collection album** with owned counts and hidden-toy teasers
-- **9 achievements** (first catch, one-shot, 3-streak, lucky roll, no-minimap win…)
-- Persistent coin wallet with **daily login bonus**, win rewards, and bankruptcy relief
-- Local stats: attempts, wins, fastest time, recent rounds
+화면을 드래그하면 시점이 회전하고, 손을 떼면 네 방향 중 가까운 방향으로 맞춰집니다. 이동 방향은 현재 시점을 따라갑니다. 시점 버튼으로 정면·측면·위쪽 보기를 전환할 수 있습니다.
 
-### Controls & camera
-- Virtual joystick (fixed or **follow-finger** mode), keyboard, left-handed layout
-- Four-way camera snap + one-tap **front / side / top** presets
-- Auto cinematic camera (coin close-up, carry follow) — can be disabled
-- Precision slowdown near catchable toys (toggleable)
-- Machine **shake** (once per game) to loosen stuck toys
+### 더 잘 뽑는 방법
 
-### Extras
-- **Photo mode**: hide the UI, frame your shot, export PNG
-- **Share card**: canvas-rendered result card download
-- Real-time top-down minimap, onboarding tutorial, zh/en i18n
-- Auto-pause in background tabs; coin refund if the page closes mid-grab
+- 조준 보조 원이 금색으로 바뀌는 위치를 노려 보세요.
+- 인형 한가운데를 잡으면 더 안정적입니다. 집게의 세 갈래가 같은 인형을 잡아야 합니다.
+- 중심을 벗어난 잡기, 빠른 이동, 약한 집게 힘이 미끄러짐에 영향을 줍니다.
+- 두 번 연속 미끄러지면 다음에 잡은 인형은 놓치지 않는 보정이 적용됩니다.
+- 기계 흔들기는 한 게임에 한 번 사용할 수 있습니다.
+- 설정의 **안정 집게**를 켜면 미끄러짐 없이 즐길 수 있습니다.
 
-### Performance
-- Toys rendered via `instancedMesh` (per-instance color) — 4 draw calls for all toys
-- Expensive shaders (aurora dome, raymarched nebula floor) render into small offscreen targets at reduced refresh rates
-- Minimap second pass throttled to every 3rd frame and blitted from a cached texture
-- Shadow map freezing when the scene is static, 4 lights total, quality tiers (High / Smooth)
-- Vendor chunk splitting (three / rapier / react) for long-term caching
+## 주요 기능
 
-## Tech Stack
+### 물리와 피드백
 
-| Category | Technology | Version |
-| --- | --- | --- |
-| UI framework | React + React DOM | ^19.2 |
-| 3D rendering | Three.js | ^0.185 |
-| React 3D bindings | @react-three/fiber | ^9.7 |
-| Physics | @react-three/rapier (Rapier) | ^2.2 |
-| 3D helpers | @react-three/drei | ^10.7 |
-| State | Zustand | ^5.0 |
-| Build | Vite | ^5.4 |
-| Types | TypeScript | ^5.6 |
+Rapier 강체 물리로 인형 충돌, 쌓임, 흔들림과 미끄러짐을 계산합니다. 집게 움직임, 화면 흔들림, 효과음, 획득 동전 연출이 결과를 알려 줍니다. 실패 후 빠른 복귀와 건너뛰기를 지원합니다.
 
-## Getting Started
+### 인형 도감과 업적
+
+시바견, 눈꽃 시바, 벚꽃 시바, 황금 시바, 별빛 시바 등 **5종류**의 인형을 모을 수 있습니다. 일반·희귀·숨겨진 인형으로 나뉘며 크기, 무게, 미끄러짐과 별 보상이 다릅니다.
+
+업적은 첫 인형, 한 번에 성공, 3연속 성공, 행운의 굴러들기, 번개 손, 뽑기 고수, 눈썰미, 감으로 뽑기, 도감 완성의 **9종류**입니다.
+
+### 동전과 기록
+
+- 매일 접속 보너스와 성공 보상이 있습니다.
+- 동전이 부족해 진행이 막히지 않도록 구제 동전이 제공됩니다.
+- 시도 횟수, 성공 횟수, 성공률, 최고 기록과 최근 10회 기록을 확인할 수 있습니다.
+- 페이지를 닫아 중단된 뽑기는 다음 접속 때 동전을 돌려주는 보호 기능이 있습니다.
+
+### 설정과 사진
+
+한국어가 기본이며 영어·중국어로 전환할 수 있습니다. 음악, 효과음, 진동, 조준 보조, 자동 카메라, 왼손잡이 배치, 손가락을 따라가는 조이스틱, 정밀 감속, 미니맵, 화질과 난이도를 조정할 수 있습니다. 사진 모드에서는 UI를 숨기고 PNG를 저장하며, 결과 카드도 이미지로 저장할 수 있습니다.
+
+## 저장과 실행 환경
+
+진행 상황은 서버가 아닌 **현재 브라우저의 localStorage**에 저장됩니다. 다른 기기나 브라우저와 동기화되지 않습니다. 사이트 데이터 삭제, 시크릿 모드 종료, 저장 차단으로 기록이 사라질 수 있습니다. 원작 사이트와 이 한국어판은 도메인이 달라 기록이 자동으로 이어지지 않습니다.
+
+WebGL과 하드웨어 가속을 지원하는 최신 브라우저를 권장합니다. 느린 기기에서는 화질을 **부드럽게**로 바꾸세요. 한국어 웹폰트는 Google Fonts에서 불러오며, 연결되지 않으면 기기의 기본 한글 폰트를 사용합니다.
+
+## 한국어화 범위
+
+- 튜토리얼, HUD, 버튼, 결과, 일시정지, 도움말, 설정, 기록과 오류 안내
+- 인형 이름, 희귀도, 업적과 공유 카드
+- 한국어 기본값, HTML 언어·제목·설명, Noto Sans KR 폰트
+- 영어·중국어 번역과 원작 게임 로직 유지
+- 빌드 설치가 가능하도록 원작 lockfile의 잘못된 플랫폼 항목 정리
+
+3D 모델이나 텍스처 안에 포함된 글자는 UI 번역과 별개이며, 원본 에셋을 유지합니다.
+
+## 기술 구성
+
+| 구분 | 사용 기술 |
+| --- | --- |
+| UI | React 19, React DOM |
+| 3D | Three.js, @react-three/fiber, @react-three/drei |
+| 물리 | @react-three/rapier |
+| 상태 관리 | Zustand |
+| 개발·빌드 | TypeScript, Vite |
+| 테스트 | Vitest |
+
+## 로컬 실행
+
+워크플로와 같은 **Node.js 24**를 권장합니다.
 
 ```bash
-# Node.js >= 18
-npm install
-npm run dev        # dev server (LAN access enabled)
-npm run typecheck  # tsc -b
-npm run build      # production build to dist/
-npm run preview    # preview the dist build
+npm ci
+npm run dev
 ```
 
-## Deployment
-
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and publishes to GitHub Pages. `vite.config.ts` sets `base: '/claw3d/'` for production; adjust `repoName` if you fork under a different repository name.
-
-## Project Structure
-
+```bash
+npm run typecheck  # TypeScript 검사
+npm test          # 자동 테스트
+npm run lint      # 코드 검사
+npm run build     # dist/에 정적 빌드 생성
+npm run preview   # 빌드 결과 미리 보기
 ```
+
+## GitHub Pages 배포
+
+`.github/workflows/deploy.yml`이 main 브랜치 변경 시 빌드한 `dist/`를 GitHub Pages에 배포합니다. 저장소 **Settings → Pages → Source**는 **GitHub Actions**로 설정합니다. 포크의 Actions가 비활성화되어 있으면 먼저 활성화해야 합니다.
+
+`vite.config.ts`의 배포 경로는 `/claw3d/`입니다. 저장소 이름을 변경한다면 `repoName`도 바꾸세요. 개발 서버에서는 `/`를 사용합니다.
+
+## 소스 구조
+
+```text
 src/
-├── config/gameConfig.ts   # All tunables: physics, claw, grip/slip, toy types, timing, storage keys
-├── store/
-│   ├── gameStore.ts       # Zustand store: game state machine, wallet, progress, achievements
-│   ├── refs.ts            # Per-frame hot data (claw position, phases) bypassing React state
-│   └── persistence.ts     # localStorage helpers
-├── game/                  # 3D scene: Machine, Claw, Toys (instanced), GrabController,
-│                          # CameraRig, MinimapRenderer, Stage (shaders), AimAssist
-├── ui/                    # HUD, joystick, modals, settings, album, photo bar
-├── audio/soundManager.ts  # WebAudio synth SFX + music loop
-├── i18n/                  # zh / en dictionaries
-└── utils/                 # capability detection, share card renderer
+├── config/       # 물리·인형·난이도·타이밍 설정
+├── store/        # 게임 상태, 동전, 업적, 저장
+├── game/         # 집게, 인형, 기계, 카메라, 미니맵, 배경
+├── ui/           # HUD, 조이스틱, 메뉴, 도감, 사진
+├── audio/        # 효과음과 배경 음악
+├── i18n/         # 한국어·영어·중국어 사전
+└── utils/        # 환경 검사와 결과 카드
 ```
 
-## Tuning
+## 원작과 라이선스
 
-Difficulty and feel are data-driven in `src/config/gameConfig.ts`:
+- 원작 저장소: https://github.com/neciszhang/claw3d
+- 원작 데모: https://neciszhang.github.io/claw3d/
+- 원작자: **Necis**
+- 라이선스: **MIT**, Copyright (c) 2026 Necis
 
-- `GRIP` — slip probability model (base, eccentricity weight, swing hazard, pity threshold)
-- `TOY_TYPES` — rarity table: spawn weight, scale, density, slip factor, star reward
-- `TIMING` — every phase duration of the grab cycle
-- `DIFFICULTY` — claw speed, sensor radius, toy layout per difficulty
-
-## License
-
-MIT
+자세한 조건은 [LICENSE](LICENSE)를 확인하세요. 배포하거나 수정본을 공유할 때 원작의 저작권 표시와 라이선스를 유지해야 합니다.
