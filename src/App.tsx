@@ -50,8 +50,8 @@ export default function App() {
   const photoMode = useGameStore((s) => s.photoMode)
   const leftHanded = useGameStore((s) => s.settings.leftHanded)
   useEffect(() => {
-    document.title = language === 'zh' ? '3D 娃娃机' : '3D Claw Machine'
-    document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'
+    document.title = language === 'ko' ? '3D 인형뽑기' : language === 'zh' ? '3D 娃娃机' : '3D Claw Machine'
+    document.documentElement.lang = language === 'ko' ? 'ko' : language === 'zh' ? 'zh-CN' : 'en'
   }, [language])
 
   // Coin sound: played uniformly when entering COIN state
