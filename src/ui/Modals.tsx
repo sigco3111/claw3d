@@ -23,7 +23,7 @@ export function ResultModal() {
       <div className={`modal result-card ${ok ? 'success' : 'fail'}`}>
         <button
           className="modal-close"
-          aria-label="close"
+          aria-label={t.settings.language === '언어' ? '닫기' : t.settings.language === '语言' ? '关闭' : 'Close'}
           onClick={() => {
             sound.play('click')
             closeResult()
