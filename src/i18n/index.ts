@@ -1,6 +1,6 @@
 import { useGameStore } from '../store/gameStore'
 
-export type Lang = 'en' | 'zh'
+export type Lang = 'ko' | 'en' | 'zh'
 
 const en = {
   title: '3D Claw Machine',
@@ -432,7 +432,72 @@ const zh: Dict = {
   },
 }
 
-const dicts: Record<Lang, Dict> = { en, zh }
+const ko: Dict = {
+  title: '3D 인형뽑기',
+  status: { READY: '준비 완료', MOVING: '이동 중', CAMERA_SNAP: '시점 조정', COIN: '동전 넣는 중…', UNPAID: '동전을 넣어 주세요', GRABBING: '뽑는 중…', RESULT: '결과', PAUSED: '일시정지', RESETTING: '초기화 중', COMPLETED: '모두 뽑았어요!', TUTORIAL: '조작 안내' },
+  hud: {
+    grabs: (n) => `시도 ${n}회`, wins: (n) => `성공 ${n}회`, left: (n) => `남은 인형 ${n}개`, coins: (n) => `🪙 ${n}`,
+    dailyBonus: (n) => `오늘의 접속 보너스 +${n} 동전!`, shake: '흔들기', view: '시점', more: '더 보기', history: '기록', soundOn: '소리 켬', soundOff: '소리 끔', help: '도움말', settings: '설정', pause: '일시정지', minimapAria: '위에서 본 미니맵', joystickAria: '가상 조이스틱: 드래그해서 집게를 이동하세요',
+  },
+  photo: { enter: '사진 모드', capture: '촬영', exit: '나가기' },
+  share: { button: '결과 카드 저장', toyLine: (wins) => `총 획득: ${wins}개`, statLine: (t) => `이번 시도: ${t}`, footer: '3D 인형뽑기 · 브라우저에서 바로 즐기세요' },
+  album: {
+    title: '인형 도감', achievements: '업적', notOwned: '아직 못 뽑았어요',
+    rarity: { common: '일반', rare: '희귀', hidden: '숨겨진 인형' },
+    toys: { shiba: '시바견', snow: '눈꽃 시바', sakura: '벚꽃 시바', golden: '황금 시바', cosmic: '별빛 시바' },
+    achv: {
+      firstWin: { name: '첫 인형', desc: '처음으로 인형을 뽑으세요' },
+      oneShot: { name: '한 번에 성공', desc: '게임의 첫 시도에 인형을 뽑으세요' },
+      streak3: { name: '3연속 성공', desc: '세 번 연속으로 인형을 뽑으세요' },
+      luckyRoll: { name: '행운의 굴러들기', desc: '미끄러진 인형이 출구로 굴러 들어가면 달성해요' },
+      fast10: { name: '번개 손', desc: '10초 안에 인형을 뽑으세요' },
+      hardWin: { name: '뽑기 고수', desc: '어려움 난이도에서 인형을 뽑으세요' },
+      noAssist: { name: '눈썰미', desc: '조준 보조 원을 끄고 인형을 뽑으세요' },
+      noMinimap: { name: '감으로 뽑기', desc: '미니맵을 끄고 인형을 뽑으세요' },
+      collectAll: { name: '도감 완성', desc: '모든 종류의 인형을 모으세요' },
+    },
+  },
+  start: { label: '뽑기 시작', grabbing: '뽑는 중…', insert: '동전 넣기 🪙', insertFirst: '먼저 동전을 넣어 주세요!', skip: '건너뛰기 ⏭', aria: '인형 뽑기 시작' },
+  loading: { loader: '불러오는 중', progress: (p, item) => `${p}%${item ? ` · ${item} 불러오는 중` : ''}`, failed: '필수 3D 파일을 불러오지 못했어요:', retry: '다시 시도', slow: '불러오는 데 시간이 걸리고 있어요. 네트워크 연결을 확인해 주세요.', wait: '계속 기다리기' },
+  tutorial: {
+    steps: [
+      { icon: '🔄', title: '시점 돌리기', text: '화면을 드래그해서 둘러보세요. 손을 떼면 앞·뒤·왼쪽·오른쪽 중 가장 가까운 방향으로 시점이 맞춰져요.' },
+      { icon: '🗺️', title: '미니맵 확인하기', text: '오른쪽 위 미니맵은 위에서 본 모습이에요. 집게가 인형 바로 위에 오도록 맞춰 보세요.' },
+      { icon: '🕹️', title: '집게 이동하기', text: '왼쪽 아래 조이스틱을 사용하세요. 멀리 밀수록 빠르게 움직여요. 이동 방향은 현재 시점을 따라가요.' },
+      { icon: '🎯', title: '뽑기 시작', text: '인형에 맞춘 뒤 뽑기 시작을 누르세요. 집게가 자동으로 내려가 인형을 잡고 출구로 옮겨요.' },
+    ],
+    skip: '건너뛰기', next: '다음', play: '게임 시작!', aria: '조작 안내', stepOf: (i, n) => `${i}/${n}`,
+  },
+  result: {
+    successTitle: '뽑았어요!', failTitle: '아깝네요…', successBody: (t, total, remaining) => `걸린 시간 ${t} · 총 성공 ${total}회${remaining > 0 ? ` · 남은 인형 ${remaining}개` : ''}`,
+    failBody: '미니맵으로 집게를 인형 바로 위에 맞춘 뒤 뽑기 시작을 누르세요.', bounced: '인형이 기계 안으로 튕겨 돌아갔어요. 출구로 들어가야 획득한 것으로 인정돼요!', slipped: '옮기는 도중 인형이 미끄러졌어요… 한가운데를 잡으면 더 단단히 잡을 수 있어요!', pityReady: '집게의 힘이 충전됐어요. 다음에 잡은 인형은 끝까지 놓치지 않아요!',
+    slipReasons: { eccentric: '중심을 벗어나 잡았어요. 다음에는 인형의 한가운데를 노려 보세요!', fastMove: '너무 빨리 움직여서 흔들리다 빠졌어요. 다음에는 천천히 옮겨 보세요.', weakGrip: '집게의 힘이 부족했어요… 가끔은 기계가 도와주지 않네요.' },
+    slipFlash: { eccentric: '중심을 놓쳤어요!', fastMove: '너무 빨라서 빠졌어요!', weakGrip: '집게의 힘이 부족해요!' },
+    coinReward: (n) => `잘 뽑았어요! +${n} 동전`, noCoins: '동전이 없어요. 뽑기 성공 보상, 재시작 구제 동전, 내일의 접속 보너스를 이용해 보세요.', playAgain: '다시 뽑기 · 🪙1', viewSummary: '결과 보기', restart: '다시 시작', aria: '뽑기 결과', seconds: (s) => `${s}초`,
+  },
+  pause: { title: '일시정지', resume: '계속하기', settings: '설정', history: '기록', help: '게임 방법', restart: '다시 시작', aria: '일시정지 메뉴' },
+  completed: { title: '인형을 모두 뽑았어요!', body: (attempts, wins, fastest) => `${attempts}회 시도 · ${wins}회 성공${fastest ? ` · 최고 기록 ${fastest}` : ''}`, restart: '다시 시작', aria: '게임 완료' },
+  confirmRestart: { title: '다시 시작할까요?', body: '인형 배치, 시도 횟수, 집게 위치가 초기 상태로 돌아가요.', cancel: '취소', confirm: '다시 시작', aria: '다시 시작 확인' },
+  help: {
+    title: '게임 방법', items: [
+      ['목표', '인형을 잡아 오른쪽 앞 출구로 떨어뜨리세요.'],
+      ['이동', '조이스틱 또는 WASD / 방향키를 사용하세요. 조이스틱을 멀리 밀수록 빨라져요.'],
+      ['시점', '화면을 드래그하세요. 손을 떼면 네 방향으로 맞춰져요. 조작 방향은 시점을 따라가요.'],
+      ['뽑기', '뽑기 시작을 누르면 집게가 내려가고, 닫힌 뒤, 인형을 잡고 올라와요.'],
+      ['성공 조건', '집게의 세 갈래가 같은 인형을 모두 잡아야 해요. 출구로 들어가야 획득이에요.'],
+      ['안내', '실제 경품이나 결제는 없는 로컬 게임이에요. 기록은 이 브라우저에만 저장돼요.'],
+    ], ok: '확인', aria: '게임 방법',
+  },
+  error: { title: '문제가 생겼어요', unknown: '알 수 없는 오류가 발생했어요.', contextLost: 'WebGL 연결이 끊겨 화면 표시가 중단됐어요. 다시 시도를 눌러 복구해 주세요.', refresh: '페이지 새로고침', retry: '다시 시도' },
+  unsupported: { title: '3D 게임을 실행할 수 없어요', noWebgl: '이 브라우저는 WebGL을 지원하지 않아 3D 화면을 표시할 수 없어요.', initFail: 'WebGL을 시작하지 못했어요. 브라우저 설정이나 하드웨어 가속이 꺼져 있는지 확인해 주세요.', hint: '최신 Chrome, Safari 또는 Edge에서 하드웨어 가속을 켜고 실행해 주세요.' },
+  settings: {
+    title: '설정', music: '배경 음악', sfx: '효과음', vibration: '진동', steadyGrip: '안정 집게 (미끄러짐 없음)', aimAssist: '조준 보조 원', autoCamera: '자동 카메라', leftHanded: '왼손잡이 배치', joystickFollow: '손가락을 따라가는 조이스틱', precisionSlow: '인형 근처에서 정밀 감속', minimap: '미니맵', debug: '디버그 (충돌 영역 표시)', perf: '성능 표시', quality: '화질', qualityHigh: '고화질', qualityLow: '부드럽게', difficulty: '난이도', language: '언어', diffNames: { easy: '쉬움', normal: '보통', hard: '어려움' }, diffConfirm: (name) => `난이도를 "${name}"으로 바꾸면 게임이 다시 시작돼요. 계속할까요?`, diffConfirmAria: '난이도 변경 확인', cancel: '취소', confirmSwitch: '변경', showTutorial: '조작 안내 다시 보기', clear: '로컬 기록 지우기', back: '돌아가기', on: '켬', off: '끔',
+  },
+  confirmClear: { title: '로컬 기록을 지울까요?', body: '총 시도 횟수, 성공률, 최고 기록, 최근 기록이 영구 삭제돼요.', cancel: '취소', confirm: '지우기', aria: '기록 삭제 확인' },
+  history: { title: '기록', attempts: '시도 횟수', wins: '성공 횟수', rate: '성공률', fastest: '최고 기록', recent: '최근 10회', empty: '아직 기록이 없어요. 먼저 한 번 뽑아 보세요!', win: '✓ 성공', lose: '✗ 실패', back: '돌아가기', aria: '기록' },
+}
+
+const dicts: Record<Lang, Dict> = { ko, en, zh }
 
 export function useT(): Dict {
   const lang = useGameStore((s) => s.settings.language)
