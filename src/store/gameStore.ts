@@ -58,7 +58,7 @@ export interface Settings {
   difficulty: Difficulty
   debug: boolean
   perfPanel: boolean
-  language: 'en' | 'zh'
+  language: 'ko' | 'en' | 'zh'
   /** Steady-grip mode: a grabbed toy never slips (assist/demo) */
   steadyGrip: boolean
   /** Aim assist: projection ring under the claw with a catchable hint */
@@ -95,7 +95,7 @@ const defaultSettings: Settings = {
   difficulty: 'normal',
   debug: false,
   perfPanel: false,
-  language: 'en',
+  language: 'ko',
   steadyGrip: false,
   aimAssist: true,
   autoCamera: true,
