@@ -17,7 +17,7 @@ export function AlbumPanel() {
       <div className="modal album-card">
         <button
           className="modal-close"
-          aria-label="close"
+          aria-label={t.close}
           onClick={() => {
             sound.play('click')
             closeOverlay()
