@@ -14,7 +14,7 @@ body,
 
 body {
   font-family:
-    -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif;
   background: #150d2a;
   color: #fff;
   -webkit-tap-highlight-color: transparent;
