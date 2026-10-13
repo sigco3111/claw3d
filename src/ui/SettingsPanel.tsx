@@ -50,7 +50,7 @@ export function SettingsPanel() {
         <label className="setting-row">
           <span>{S.language}</span>
           <div className="seg" role="radiogroup" aria-label={S.language}>
-            {(['en', 'zh'] as const).map((l) => (
+            {(['ko', 'en', 'zh'] as const).map((l) => (
               <button
                 key={l}
                 role="radio"
@@ -58,7 +58,7 @@ export function SettingsPanel() {
                 className={settings.language === l ? 'on' : ''}
                 onClick={() => { sound.play('click'); updateSettings({ language: l }) }}
               >
-                {l === 'en' ? 'English' : '中文'}
+                {l === 'ko' ? '한국어' : l === 'en' ? 'English' : '中文'}
               </button>
             ))}
           </div>
@@ -199,7 +199,7 @@ export function HistoryDrawer() {
           <div><b>{stats.attempts}</b><span>{t.history.attempts}</span></div>
           <div><b>{stats.successes}</b><span>{t.history.wins}</span></div>
           <div><b>{rate}%</b><span>{t.history.rate}</span></div>
-          <div><b>{stats.fastestTime != null ? `${(stats.fastestTime / 1000).toFixed(1)}s` : '—'}</b><span>{t.history.fastest}</span></div>
+          <div><b>{stats.fastestTime != null ? t.result.seconds((stats.fastestTime / 1000).toFixed(1)) : '—'}</b><span>{t.history.fastest}</span></div>
         </div>
         <h3>{t.history.recent}</h3>
         {stats.recent.length === 0 ? (
@@ -209,7 +209,7 @@ export function HistoryDrawer() {
             {stats.recent.map((r, i) => (
               <li key={r.at + '-' + i} className={r.result}>
                 <span>{r.result === 'success' ? t.history.win : t.history.lose}</span>
-                <span>{(r.timeMs / 1000).toFixed(1)}s</span>
+                <span>{t.result.seconds((r.timeMs / 1000).toFixed(1))}</span>
                 <span>{new Date(r.at).toLocaleTimeString()}</span>
               </li>
             ))}
