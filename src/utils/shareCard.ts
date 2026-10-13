@@ -21,18 +21,18 @@ export function createShareCard(opts: {
   ctx.strokeRect(10, 10, w - 20, h - 20)
   ctx.textAlign = 'center'
   ctx.fillStyle = '#ffd257'
-  ctx.font = 'bold 40px system-ui, sans-serif'
+  ctx.font = 'bold 40px system-ui, "Noto Sans KR", sans-serif'
   ctx.fillText('🎉 ' + opts.title, w / 2, 92)
   ctx.font = '64px system-ui'
   ctx.fillText('🐶', w / 2, 175)
   ctx.fillStyle = '#ffffff'
-  ctx.font = 'bold 26px system-ui, sans-serif'
+  ctx.font = 'bold 26px system-ui, "Noto Sans KR", sans-serif'
   ctx.fillText(opts.toyLine, w / 2, 225)
   ctx.fillStyle = '#cfc6ec'
-  ctx.font = '20px system-ui, sans-serif'
+  ctx.font = '20px system-ui, "Noto Sans KR", sans-serif'
   ctx.fillText(opts.statLine, w / 2, 265)
   ctx.fillStyle = 'rgba(255,255,255,0.55)'
-  ctx.font = '15px system-ui, sans-serif'
+  ctx.font = '15px system-ui, "Noto Sans KR", sans-serif'
   ctx.fillText(opts.footer, w / 2, 320)
   return c.toDataURL('image/png')
 }
