@@ -4,6 +4,7 @@ export type Lang = 'ko' | 'en' | 'zh'
 
 const en = {
   title: '3D Claw Machine',
+  close: 'Close',
   status: {
     READY: 'Ready',
     MOVING: 'Moving',
@@ -220,6 +221,7 @@ type Dict = typeof en
 
 const zh: Dict = {
   title: '3D 娃娃机',
+  close: '关闭',
   status: {
     READY: '待机',
     MOVING: '移动中',
@@ -434,6 +436,7 @@ const zh: Dict = {
 
 const ko: Dict = {
   title: '3D 인형뽑기',
+  close: '닫기',
   status: { READY: '준비 완료', MOVING: '이동 중', CAMERA_SNAP: '시점 조정', COIN: '동전 넣는 중…', UNPAID: '동전을 넣어 주세요', GRABBING: '뽑는 중…', RESULT: '결과', PAUSED: '일시정지', RESETTING: '초기화 중', COMPLETED: '모두 뽑았어요!', TUTORIAL: '조작 안내' },
   hud: {
     grabs: (n) => `시도 ${n}회`, wins: (n) => `성공 ${n}회`, left: (n) => `남은 인형 ${n}개`, coins: (n) => `🪙 ${n}`,
