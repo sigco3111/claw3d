@@ -6,6 +6,7 @@ import { refs } from '../store/refs'
 /** Bottom-left performance panel: FPS / frame time / draw calls / triangles */
 export function PerfPanel() {
   const t = useT()
+  const language = useGameStore((s) => s.settings.language)
   const enabled = useGameStore((s) => s.settings.perfPanel)
   const [, force] = useState(0)
 
@@ -23,7 +24,7 @@ export function PerfPanel() {
     <div className="perf-panel" aria-label={t.settings.perf}>
       <div className={`perf-fps ${fpsClass}`}>{p.fps} FPS</div>
       <div>{p.ms} ms</div>
-      <div>{t.settings.language === '언어' ? '그리기' : 'DC'} {p.drawCalls}</div>
+      <div>{language === 'ko' ? '그리기' : 'DC'} {p.drawCalls}</div>
       <div>△ {(p.triangles / 1000).toFixed(1)}k</div>
     </div>
   )
